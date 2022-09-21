@@ -1,7 +1,7 @@
 import { getAnalytics } from "firebase/analytics";
-import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { Component, createMemo } from 'solid-js';
+import { Component } from 'solid-js';
 
 import Navbar from './Navbar';
 
@@ -19,20 +19,12 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth();
-
-
-const user = createMemo(() => {
-  let u: User|null = null;
-  onAuthStateChanged(auth, (user) => u = user);
-  return u;
-});
+const auth = getAuth(app);
 
 const App: Component = () => {
   return (
     <div class={styles.App}>
-      <Navbar user={user()}/>
+      <Navbar auth={auth}/>
       <header class={styles.header}>
         <img src={logo} class={styles.logo} alt="logo" />
         <p>
