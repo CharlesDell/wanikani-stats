@@ -2,6 +2,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { Component } from 'solid-js';
+import { Route, Routes, useLocation } from "@solidjs/router";
 
 import Navbar from './Navbar';
 
@@ -22,9 +23,13 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 const App: Component = () => {
+  const location = useLocation()
   return (
     <div class={styles.App}>
       <Navbar auth={auth}/>
+      <Routes>
+        <Route path="*" element={<div>At route {location.pathname}</div>}/>
+      </Routes>
       <header class={styles.header}>
         <img src={logo} class={styles.logo} alt="logo" />
         <p>
