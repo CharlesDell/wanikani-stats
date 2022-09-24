@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .charts {
+    @apply bg-blue-500 h-96;
+  }
+}

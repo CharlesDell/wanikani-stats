@@ -1,13 +1,48 @@
 import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { Component } from 'solid-js';
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import {
+  Component,
+  createMemo,
+  createResource,
+  createSignal,
+  lazy,
+} from "solid-js";
 import { Route, Routes, useLocation } from "@solidjs/router";
+import { fetchUserDashboard } from "../utils/firestore-utils";
 
-import Navbar from './Navbar';
+import Footer from "./Footer";
+import Navbar from "./Navbar";
 
-import logo from '../assets/logo.svg';
-import styles from './App.module.css';
+import styles from "./App.module.css";
+
+const Hero = lazy(() => import("./Hero"));
+const Dashboard = lazy(() => import("./Dashboard"));
+const Progress = lazy(() => import("./Progress"));
+const Charts = lazy(() => import("./Charts"));
+
+const HeroData = () => {
+  // const [hero] = createResource(() => import("../assets/hero.png"));
+  // return hero;
+};
+
+const DashboardData = (user: User | null) => {
+  const [dashboardData] = createResource(
+    () => user?.getIdToken(),
+    fetchUserDashboard
+  );
+  return dashboardData;
+};
+
+const ProgressData = (user: User | null) => {
+  // const [hero] = createResource(() => import("../assets/hero.png"));
+  // return hero;
+};
+
+const ChartsData = (user: User | null) => {
+  // const [hero] = createResource(() => import("../assets/hero.png"));
+  // return hero;
+};
 
 const firebaseConfig = {
   apiKey: "AIzaSyDyZy2Duyj8yNxAusRvy9fYbDGJ9Heg9y8",
@@ -16,34 +51,42 @@ const firebaseConfig = {
   storageBucket: "wanikani-stats-bd63d.appspot.com",
   messagingSenderId: "979953928757",
   appId: "1:979953928757:web:3c4c8671ee5642cf59bf7c",
-  measurementId: "G-CZBGZZRLMK"
+  measurementId: "G-CZBGZZRLMK",
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 const App: Component = () => {
-  const location = useLocation()
+  const location = useLocation();
+  const pathname = createMemo(() => location.pathname);
+
+  const [user, setUser] = createSignal<User | null>(null);
+  onAuthStateChanged(auth, (u) => setUser(u));
+
   return (
     <div class={styles.App}>
-      <Navbar auth={auth}/>
-      <Routes>
-        <Route path="*" element={<div>At route {location.pathname}</div>}/>
-      </Routes>
-      <header class={styles.header}>
-        <img src={logo} class={styles.logo} alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          class={styles.link}
-          href="https://github.com/solidjs/solid"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Solid
-        </a>
-      </header>
+      <Navbar auth={auth} pathname={pathname} />
+      <main>
+        <Routes>
+          <Route
+            path="/"
+            component={user() ? Dashboard : Hero}
+            data={user() ? () => DashboardData(user()) : HeroData}
+          />
+          <Route
+            path="/progress"
+            component={Progress}
+            data={() => ProgressData(user())}
+          />
+          <Route
+            path="/charts"
+            component={Charts}
+            data={() => ChartsData(user())}
+          />
+        </Routes>
+      </main>
+      <Footer />
     </div>
   );
 };

@@ -3,22 +3,22 @@
 @tailwind utilities;
 
 @layer components {
-    .navbar {
-        @apply mx-auto max-w-7xl px-2 sm:px-6 lg:px-8;
-    }
-    .buttonPrimary {
-        @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
-    }
-    .navLinkSelected {
-        @apply bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium;
-    }
-    .navLinkUnselected {
-        @apply text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium;
-    }
-    .mobileNavLinkSelected {
-        @apply bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium;
-    }
-    .mobileNavLinkUnselected {
-        @apply text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium;
-    }
+  .navbar {
+    @apply mx-auto max-w-7xl px-2 sm:px-6 lg:px-8;
+  }
+  .buttonPrimary {
+    @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
+  }
+  .navLinkSelected {
+    @apply bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium;
+  }
+  .navLinkUnselected {
+    @apply text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium;
+  }
+  .mobileNavLinkSelected {
+    @apply bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium;
+  }
+  .mobileNavLinkUnselected {
+    @apply text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium;
+  }
 }
