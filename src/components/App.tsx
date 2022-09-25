@@ -8,7 +8,7 @@ import {
   createSignal,
   lazy,
 } from "solid-js";
-import { Route, Routes, useLocation } from "@solidjs/router";
+import { Navigate, Route, Routes, useLocation } from "@solidjs/router";
 import { fetchUserDashboard } from "../utils/firestore-utils";
 
 import Footer from "./Footer";
@@ -66,13 +66,26 @@ const App: Component = () => {
 
   return (
     <div class={styles.App}>
-      <Navbar auth={auth} pathname={pathname} />
+      <Navbar auth={auth} />
       <main>
         <Routes>
+          {user() ? (
+            <Route path="/">
+              <Navigate href="/dashboard" />
+            </Route>
+          ) : (
+            <Route path="/">
+              <Navigate href="/home" />
+            </Route>
+          )}
+          <Route path="/">
+            <Navigate href={user() ? "/dashboard" : "/home"} />
+          </Route>
+          <Route path="/home" component={Hero} data={HeroData} />
           <Route
-            path="/"
-            component={user() ? Dashboard : Hero}
-            data={user() ? () => DashboardData(user()) : HeroData}
+            path="/dashboard"
+            component={Dashboard}
+            data={() => DashboardData(user())}
           />
           <Route
             path="/progress"

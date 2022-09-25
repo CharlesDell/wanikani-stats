@@ -5,15 +5,16 @@ import styles from "./Footer.module.css";
 
 const Footer: Component = () => {
   return (
-    <footer class="text-center lg:text-left bg-gray-100 text-gray-600">
-      <div class="text-center p-6 bg-gray-200">
-        <span>© 2021 Copyright:</span>
+    <footer class="text-center lg:text-left drop-shadow bg-white text-gray-600">
+      <div class="text-center flex justify-center p-6">
+        <span>© 2022 Copyright:</span>
         <a
-          class="text-gray-600 font-semibold"
-          href="https://tailwind-elements.com/"
+          class="text-gray-600 ml-1 font-semibold"
+          href="https://github.com/CharlesDell/wanikani-stats/blob/main/LICENSE"
         >
-          Tailwind Elements
+          Charles Dell'Orto
         </a>
+        <span class="mx-2"> | </span>
         <a href="https://github.com/CharlesDell/wanikani-stats" target="_blank">
           <img src={github} class={styles.github} />
         </a>

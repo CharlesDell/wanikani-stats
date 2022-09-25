@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .active {
+    @apply bg-pink-400 text-black sm:block px-3 py-2 rounded-md text-sm sm:text-base font-medium;
+  }
+  .inactive {
+    @apply text-gray-700 hover:bg-pink-200 hover:text-gray-900 sm:block px-3 py-2 rounded-md text-sm sm:text-base font-medium;
+  }
+}

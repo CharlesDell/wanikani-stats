@@ -1,12 +1,5 @@
-import {
-  Accessor,
-  Component,
-  createMemo,
-  createSignal,
-  For,
-  JSX,
-} from "solid-js";
-import { useLocation } from "@solidjs/router";
+import { Component, createSignal } from "solid-js";
+import { Link, NavLink } from "@solidjs/router";
 import {
   Auth,
   signInWithPopup,
@@ -16,25 +9,17 @@ import {
   User,
 } from "firebase/auth";
 
-import styles from "./Navbar.module.css";
+import "./Navbar.css";
 
 const provider = new GoogleAuthProvider();
 
-const pathsMap = new Map<string, string>([
-  ["/", "Dashboard"],
-  ["/progress", "Progress"],
-  ["/charts", "Charts"],
-]);
-
-const Navbar: Component<{ auth: Auth; pathname: Accessor<string> }> = (
-  props
-) => {
+const Navbar: Component<{ auth: Auth }> = (props) => {
   const [user, setUser] = createSignal<User | null>(null);
   onAuthStateChanged(props.auth, (u) => setUser(u));
 
   return (
-    <nav class="bg-gray-800">
-      <div class={styles.navbar}>
+    <nav class="bg-white drop-shadow">
+      <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div class="relative flex h-16 items-center justify-between">
           <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
             <button
@@ -91,9 +76,15 @@ const Navbar: Component<{ auth: Auth; pathname: Accessor<string> }> = (
             </div>
             <div class="hidden sm:ml-6 sm:block">
               <div class="flex space-x-4">
-                <For each={Array.from(pathsMap.keys())}>
-                  {(path) => NavLinks(path, props.pathname())}
-                </For>
+                <NavLink href="/dashboard" class="active">
+                  Dashboard
+                </NavLink>
+                <NavLink href="/progress" class="inactive">
+                  Progress
+                </NavLink>
+                <NavLink href="/charts" class="inactive">
+                  Charts
+                </NavLink>
               </div>
             </div>
           </div>
@@ -111,48 +102,11 @@ const Navbar: Component<{ auth: Auth; pathname: Accessor<string> }> = (
 
 export default Navbar;
 
-const NavLinks = (path: string, currentPath: string) => {
-  if (path === currentPath) {
-    return (
-      <a href={path} class={styles.navLinkSelected} aria-current="page">
-        {pathsMap.get(path)}
-      </a>
-    );
-  }
-  return (
-    <a href={path} class={styles.navLinkUnselected}>
-      {pathsMap.get(path)}
-    </a>
-  );
-};
-
 const UserArea: Component<{ user: User; auth: Auth }> = ({ user, auth }) => {
   const [menuOpen, setMenuOpen] = createSignal<boolean>(false);
 
   return (
     <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-      <button
-        type="button"
-        class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-      >
-        <span class="sr-only">View notifications</span>
-        <svg
-          class="h-6 w-6"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
-          />
-        </svg>
-      </button>
-
       <div class="relative ml-3">
         <div>
           <button
@@ -183,34 +137,34 @@ const UserArea: Component<{ user: User; auth: Auth }> = ({ user, auth }) => {
             aria-labelledby="user-menu-button"
             tabindex="-1"
           >
-            <a
-              href="#"
-              class="block px-4 py-2 text-sm text-gray-700"
+            <Link
+              href={`/user/${user.uid}`}
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100"
               role="menuitem"
               tabindex="-1"
               id="user-menu-item-0"
             >
               Your Profile
-            </a>
-            <a
-              href="#"
-              class="block px-4 py-2 text-sm text-gray-700"
+            </Link>
+            <Link
+              href={`/user/${user.uid}/settings`}
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100"
               role="menuitem"
               tabindex="-1"
               id="user-menu-item-1"
             >
               Settings
-            </a>
-            <a
+            </Link>
+            <Link
               href="/"
               onClick={() => signOut(auth)}
-              class="block px-4 py-2 text-sm text-gray-700"
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100"
               role="menuitem"
               tabindex="-1"
               id="user-menu-item-2"
             >
               Sign out
-            </a>
+            </Link>
           </div>
         )}
       </div>
@@ -221,8 +175,7 @@ const UserArea: Component<{ user: User; auth: Auth }> = ({ user, auth }) => {
 const LoginArea: Component<{ auth: Auth }> = ({ auth }) => (
   <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
     <button
-      type="button"
-      class={styles.buttonPrimary}
+      class="bg-blue-500 hover:bg-blue-600 text-gray-900 font-bold py-2 px-4 rounded"
       onClick={async () => await signInWithPopup(auth, provider)}
     >
       Log In
@@ -233,15 +186,15 @@ const LoginArea: Component<{ auth: Auth }> = ({ auth }) => (
 const MobileNavbar: Component = () => (
   <div class="sm:hidden" id="mobile-menu">
     <div class="space-y-1 px-2 pt-2 pb-3">
-      <a href="/" class={styles.mobileNavLinkSelected} aria-current="page">
+      <NavLink href="/dashboard" class="active">
         Dashboard
-      </a>
-      <a href="/progress" class={styles.mobileNavLinkUnselected}>
+      </NavLink>
+      <NavLink href="/progress" class="inactive">
         Progress
-      </a>
-      <a href="/charts" class={styles.mobileNavLinkUnselected}>
+      </NavLink>
+      <NavLink href="/charts" class="inactive">
         Charts
-      </a>
+      </NavLink>
     </div>
   </div>
 );
