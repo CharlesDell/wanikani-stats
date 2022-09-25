@@ -1,9 +1,7 @@
 import { Component } from "solid-js";
 
-import styles from "./Progress.module.css";
-
 const Progress: Component = () => {
-  return <div class={styles.progress}></div>;
+  return <div class="bg-yellow-500 h-96"></div>;
 };
 
 export default Progress;

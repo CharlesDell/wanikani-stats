@@ -1,7 +1,7 @@
 import { useRouteData } from "@solidjs/router";
 import { Component } from "solid-js";
 
-import axios from "axios";
+import "./Settings.css";
 
 type SettingsData = {
   wk_token: string;

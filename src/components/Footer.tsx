@@ -1,7 +1,6 @@
 import { Component } from "solid-js";
 
 import github from "../assets/github.svg";
-import styles from "./Footer.module.css";
 
 const Footer: Component = () => {
   return (
@@ -17,7 +16,7 @@ const Footer: Component = () => {
         </a>
         <span class="mx-2"> | </span>
         <a href="https://github.com/CharlesDell/wanikani-stats" target="_blank">
-          <img src={github} class={styles.github} />
+          <img src={github} class="h-6 w-6" />
         </a>
       </div>
     </footer>
