@@ -11,6 +11,7 @@ const Footer: Component = () => {
         <a
           class="text-gray-600 ml-1 font-semibold"
           href="https://github.com/CharlesDell/wanikani-stats/blob/main/LICENSE"
+          target="_blank"
         >
           Charles Dell'Orto
         </a>

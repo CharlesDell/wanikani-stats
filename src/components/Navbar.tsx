@@ -74,19 +74,21 @@ const Navbar: Component<{ auth: Auth }> = (props) => {
                 alt="Your Company"
               />
             </div>
-            <div class="hidden sm:ml-6 sm:block">
-              <div class="flex space-x-4">
-                <NavLink href="/dashboard" class="active">
-                  Dashboard
-                </NavLink>
-                <NavLink href="/progress" class="inactive">
-                  Progress
-                </NavLink>
-                <NavLink href="/charts" class="inactive">
-                  Charts
-                </NavLink>
+            {user() && (
+              <div class="hidden sm:ml-6 sm:block">
+                <div class="flex space-x-4">
+                  <NavLink href="/dashboard" class="active">
+                    Dashboard
+                  </NavLink>
+                  <NavLink href="/progress" class="inactive">
+                    Progress
+                  </NavLink>
+                  <NavLink href="/charts" class="inactive">
+                    Charts
+                  </NavLink>
+                </div>
               </div>
-            </div>
+            )}
           </div>
           {user() ? (
             <UserArea user={user()!} auth={props.auth} />
@@ -138,8 +140,9 @@ const UserArea: Component<{ user: User; auth: Auth }> = ({ user, auth }) => {
             tabindex="-1"
           >
             <Link
-              href={`/user/${user.uid}`}
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100"
+              href={`/users/${user.uid}`}
+              onClick={() => setMenuOpen(false)}
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100 transition-all duration-150"
               role="menuitem"
               tabindex="-1"
               id="user-menu-item-0"
@@ -147,8 +150,9 @@ const UserArea: Component<{ user: User; auth: Auth }> = ({ user, auth }) => {
               Your Profile
             </Link>
             <Link
-              href={`/user/${user.uid}/settings`}
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100"
+              href={`/users/${user.uid}/settings`}
+              onClick={() => setMenuOpen(false)}
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100 transition-all duration-150"
               role="menuitem"
               tabindex="-1"
               id="user-menu-item-1"
@@ -158,7 +162,7 @@ const UserArea: Component<{ user: User; auth: Auth }> = ({ user, auth }) => {
             <Link
               href="/"
               onClick={() => signOut(auth)}
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100"
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100 transition-all duration-150"
               role="menuitem"
               tabindex="-1"
               id="user-menu-item-2"
@@ -176,7 +180,7 @@ const LoginArea: Component<{ auth: Auth }> = ({ auth }) => (
   <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
     <button
       class="bg-blue-500 hover:bg-blue-600 text-gray-900 font-bold py-2 px-4 rounded"
-      onClick={async () => await signInWithPopup(auth, provider)}
+      onClick={async () => await signInWithPopup(auth, provider).then()}
     >
       Log In
     </button>
