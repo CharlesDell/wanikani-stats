@@ -48,8 +48,6 @@ async function _dashboardDataFetcher(
   }
 
   const calendar = Calendar(data, {});
-  console.log(typeof calendar);
-  console.log(calendar);
 
   return { calendar };
 }

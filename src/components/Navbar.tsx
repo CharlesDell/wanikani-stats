@@ -65,12 +65,12 @@ const Navbar: Component<{ auth: Auth }> = (props) => {
           <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div class="flex flex-shrink-0 items-center">
               <img
-                class="block h-8 w-auto lg:hidden border"
+                class="block h-8 w-8 lg:hidden border"
                 src={logo}
                 alt="Your Company"
               />
               <img
-                class="hidden h-8 w-auto lg:block border"
+                class="hidden h-8 w-8 lg:block border"
                 src={logo}
                 alt="Your Company"
               />

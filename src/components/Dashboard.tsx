@@ -4,9 +4,8 @@ import { dashboardData } from "../utils/data/dashboardData";
 
 const Dashboard: Component = () => {
   const data = useRouteData<typeof dashboardData>();
-  console.log("change");
-  // bg-green-500
-  return <div class="h-96">{data()?.calendar}</div>;
+
+  return <div class="bg-green-500 h-96">{data()?.calendar}</div>;
 };
 
 export default Dashboard;

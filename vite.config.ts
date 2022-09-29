@@ -19,42 +19,42 @@ export default defineConfig({
         theme_color: "#ffffff",
         icons: [
           {
-            src: "/src/assets/icon_x48.png",
+            src: "/assets/icon_x48.png",
             sizes: "48x48",
             type: "image/png",
           },
           {
-            src: "/src/assets/icon_x72.png",
+            src: "/assets/icon_x72.png",
             sizes: "72x72",
             type: "image/png",
           },
           {
-            src: "/src/assets/icon_x96.png",
+            src: "/assets/icon_x96.png",
             sizes: "96x96",
             type: "image/png",
           },
           {
-            src: "/src/assets/icon_x128.png",
+            src: "/assets/icon_x128.png",
             sizes: "128x128",
             type: "image/png",
           },
           {
-            src: "/src/assets/icon_x192.png",
+            src: "/assets/icon_x192.png",
             sizes: "192x192",
             type: "image/png",
           },
           {
-            src: "/src/assets/icon_x384.png",
+            src: "/assets/icon_x384.png",
             sizes: "384x384",
             type: "image/png",
           },
           {
-            src: "/src/assets/icon_x512.png",
+            src: "/assets/icon_x512.png",
             sizes: "512x512",
             type: "image/png",
           },
           {
-            src: "/src/assets/icon.png",
+            src: "/assets/icon.png",
             sizes: "1024x1024",
             type: "image/png",
           },
