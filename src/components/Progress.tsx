@@ -1,3 +1,4 @@
+import { useRouteData } from "@solidjs/router";
 import { Component } from "solid-js";
 
 const Progress: Component = () => {

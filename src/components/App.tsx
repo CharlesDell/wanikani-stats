@@ -1,47 +1,22 @@
-import { onAuthStateChanged, User } from "firebase/auth";
-import { Component, createResource, createSignal, lazy } from "solid-js";
+import { Component, createSignal, lazy } from "solid-js";
+import { Firebase } from "../firebase/firebase";
 import { Navigate, Route, Routes } from "@solidjs/router";
+import { onAuthStateChanged, User } from "firebase/auth";
 
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 
-import { getAllReviewStatistics } from "../functions/client";
-import { Firebase } from "../firebase/firebase";
+import { ChartsData } from "../utils/data/chartsData";
+import { dashboardData } from "../utils/data/dashboardData";
+import { HeroData } from "../utils/data/heroData";
+import { ProgressData } from "../utils/data/progressData";
+import { SettingsData } from "../utils/data/settingsData";
 
-const Hero = lazy(() => import("./Hero"));
-const Dashboard = lazy(() => import("./Dashboard"));
-const Progress = lazy(() => import("./Progress"));
 const Charts = lazy(() => import("./Charts"));
+const Dashboard = lazy(() => import("./Dashboard"));
+const Hero = lazy(() => import("./Hero"));
+const Progress = lazy(() => import("./Progress"));
 const Settings = lazy(() => import("./Settings"));
-
-const HeroData = () => {
-  // const [hero] = createResource(() => import("../assets/hero.png"));
-  // return hero;
-};
-
-const DashboardData = (user: User | null) => {
-  const [data] = createResource(
-    async () => await getAllReviewStatistics(app.db, user)
-  );
-  return data;
-};
-
-const ProgressData = (user: User | null) => {
-  // const [hero] = createResource(() => import("../assets/hero.png"));
-  // return hero;
-};
-
-const ChartsData = (user: User | null) => {
-  // const [hero] = createResource(() => import("../assets/hero.png"));
-  // return hero;
-};
-
-const SettingsData = (user: User | null) => {
-  const [data] = createResource(
-    async () => await getAllReviewStatistics(app.db, user)
-  );
-  return data;
-};
 
 const app = Firebase.Instance;
 
@@ -68,22 +43,14 @@ const App: Component = () => {
             <Route
               path="/dashboard"
               component={Dashboard}
-              data={() => DashboardData(user())}
+              data={dashboardData}
             />
-            <Route
-              path="/progress"
-              component={Progress}
-              data={() => ProgressData(user())}
-            />
-            <Route
-              path="/charts"
-              component={Charts}
-              data={() => ChartsData(user())}
-            />
+            <Route path="/progress" component={Progress} data={ProgressData} />
+            <Route path="/charts" component={Charts} data={ChartsData} />
             <Route
               path="/users/:id/settings"
               component={Settings}
-              data={SettingsData(user())}
+              data={SettingsData}
             />
           </Routes>
         </div>

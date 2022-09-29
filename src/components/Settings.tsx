@@ -1,16 +1,10 @@
 import { useRouteData } from "@solidjs/router";
-import { Component } from "solid-js";
+import { Component, Resource } from "solid-js";
+import { ReviewStatistic } from "../modules/waniKani.d";
 
 import "./Settings.css";
 
-type SettingsData = {
-  wk_token: string;
-};
-
 const Settings: Component = () => {
-  const data: SettingsData = useRouteData();
-  console.log(data);
-
   return (
     <div class="bg-orange-500">
       <div class="max-w-2xl mx-auto">
@@ -31,8 +25,17 @@ const Settings: Component = () => {
                   href="#"
                   class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
-                  <span class="material-icons">settings</span>
+                  <span class="material-icons">api</span>
                   <span class="ml-3">WaniKani</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  <span class="material-icons">storage</span>
+                  <span class="ml-3">Data</span>
                 </a>
               </li>
             </ul>

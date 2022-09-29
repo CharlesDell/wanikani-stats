@@ -1,9 +1,12 @@
+import { useRouteData } from "@solidjs/router";
 import { Component } from "solid-js";
-
-import styles from "./Dashboard.module.css";
+import { dashboardData } from "../utils/data/dashboardData";
 
 const Dashboard: Component = () => {
-  return <div class="bg-green-500 h-96"></div>;
+  const data = useRouteData<typeof dashboardData>();
+  console.log("change");
+  // bg-green-500
+  return <div class="h-96">{data()?.calendar}</div>;
 };
 
 export default Dashboard;

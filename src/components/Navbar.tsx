@@ -10,6 +10,7 @@ import {
 } from "firebase/auth";
 
 import "./Navbar.css";
+import logo from "../assets/logo.svg";
 
 const provider = new GoogleAuthProvider();
 
@@ -64,13 +65,13 @@ const Navbar: Component<{ auth: Auth }> = (props) => {
           <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div class="flex flex-shrink-0 items-center">
               <img
-                class="block h-8 w-auto lg:hidden"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                class="block h-8 w-auto lg:hidden border"
+                src={logo}
                 alt="Your Company"
               />
               <img
-                class="hidden h-8 w-auto lg:block"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                class="hidden h-8 w-auto lg:block border"
+                src={logo}
                 alt="Your Company"
               />
             </div>
@@ -139,16 +140,6 @@ const UserArea: Component<{ user: User; auth: Auth }> = ({ user, auth }) => {
             aria-labelledby="user-menu-button"
             tabindex="-1"
           >
-            <Link
-              href={`/users/${user.uid}`}
-              onClick={() => setMenuOpen(false)}
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100 transition-all duration-150"
-              role="menuitem"
-              tabindex="-1"
-              id="user-menu-item-0"
-            >
-              Your Profile
-            </Link>
             <Link
               href={`/users/${user.uid}/settings`}
               onClick={() => setMenuOpen(false)}
