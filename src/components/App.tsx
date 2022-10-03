@@ -27,33 +27,23 @@ const App: Component = () => {
   return (
     <div class="flex-auto flex-col">
       <Navbar auth={app.auth} />
-      <main class="grow">
-        <div class="md:w-4/5 sm:w-full mx-auto">
-          <Routes>
-            {user() ? (
-              <Route path="/">
-                <Navigate href="/dashboard" />
-              </Route>
-            ) : (
-              <Route path="*">
-                <Navigate href="/" />
-              </Route>
-            )}
-            <Route path="/" component={Hero} data={HeroData} />
-            <Route
-              path="/dashboard"
-              component={Dashboard}
-              data={dashboardData}
-            />
-            <Route path="/progress" component={Progress} data={ProgressData} />
-            <Route path="/charts" component={Charts} data={ChartsData} />
-            <Route
-              path="/users/:id/settings"
-              component={Settings}
-              data={SettingsData}
-            />
-          </Routes>
-        </div>
+      <main class="md:w-4/5 sm:w-full h-auto mx-auto bg-white">
+        <Routes>
+          {user() ? (
+            <Route path="/">
+              <Navigate href="/dashboard" />
+            </Route>
+          ) : (
+            <Route path="*">
+              <Navigate href="/" />
+            </Route>
+          )}
+          <Route path="/" component={Hero} data={HeroData} />
+          <Route path="/dashboard" component={Dashboard} data={dashboardData} />
+          <Route path="/progress" component={Progress} data={ProgressData} />
+          <Route path="/charts" component={Charts} data={ChartsData} />
+          <Route path="/settings" component={Settings} data={SettingsData} />
+        </Routes>
       </main>
       <Footer />
     </div>

@@ -18,8 +18,10 @@ const Navbar: Component<{ auth: Auth }> = (props) => {
   const [user, setUser] = createSignal<User | null>(null);
   onAuthStateChanged(props.auth, (u) => setUser(u));
 
+  const [mainMenuOpen, setMainMenuOpen] = createSignal<boolean>(false);
+
   return (
-    <nav class="bg-white drop-shadow">
+    <nav class="relative bg-white drop-shadow-md z-20">
       <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div class="relative flex h-16 items-center justify-between">
           <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -28,6 +30,7 @@ const Navbar: Component<{ auth: Auth }> = (props) => {
               class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
               aria-controls="mobile-menu"
               aria-expanded="false"
+              onClick={() => setMainMenuOpen(!mainMenuOpen())}
             >
               <span class="sr-only">Open main menu</span>
               <svg
@@ -97,8 +100,8 @@ const Navbar: Component<{ auth: Auth }> = (props) => {
             <LoginArea auth={props.auth} />
           )}
         </div>
+        {mainMenuOpen() && <MobileMenu />}
       </div>
-      <MobileNavbar />
     </nav>
   );
 };
@@ -106,7 +109,7 @@ const Navbar: Component<{ auth: Auth }> = (props) => {
 export default Navbar;
 
 const UserArea: Component<{ user: User; auth: Auth }> = ({ user, auth }) => {
-  const [menuOpen, setMenuOpen] = createSignal<boolean>(false);
+  const [userMenuOpen, setUserMenuOpen] = createSignal<boolean>(false);
 
   return (
     <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -118,7 +121,7 @@ const UserArea: Component<{ user: User; auth: Auth }> = ({ user, auth }) => {
             id="user-menu-button"
             aria-expanded="false"
             aria-haspopup="true"
-            onClick={() => setMenuOpen(!menuOpen())}
+            onClick={() => setUserMenuOpen(!userMenuOpen())}
           >
             <span class="sr-only">Open user menu</span>
             <img
@@ -132,18 +135,18 @@ const UserArea: Component<{ user: User; auth: Auth }> = ({ user, auth }) => {
             />
           </button>
         </div>
-        {menuOpen() && (
+        {userMenuOpen() && (
           <div
-            class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+            class="absolute right-0 z-30 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="user-menu-button"
             tabindex="-1"
           >
             <Link
-              href={`/users/${user.uid}/settings`}
-              onClick={() => setMenuOpen(false)}
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100 transition-all duration-150"
+              href={"/settings"}
+              onClick={() => setUserMenuOpen(false)}
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100 transition-all duration-150"
               role="menuitem"
               tabindex="-1"
               id="user-menu-item-1"
@@ -153,7 +156,7 @@ const UserArea: Component<{ user: User; auth: Auth }> = ({ user, auth }) => {
             <Link
               href="/"
               onClick={() => signOut(auth)}
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100 transition-all duration-150"
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100 transition-all duration-150"
               role="menuitem"
               tabindex="-1"
               id="user-menu-item-2"
@@ -178,9 +181,9 @@ const LoginArea: Component<{ auth: Auth }> = ({ auth }) => (
   </div>
 );
 
-const MobileNavbar: Component = () => (
+const MobileMenu: Component = () => (
   <div class="sm:hidden" id="mobile-menu">
-    <div class="space-y-1 px-2 pt-2 pb-3">
+    <div class="flex flex-col space-y-1 px-2 pt-2 pb-3">
       <NavLink href="/dashboard" class="active">
         Dashboard
       </NavLink>

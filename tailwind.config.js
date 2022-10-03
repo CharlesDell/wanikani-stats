@@ -4,11 +4,16 @@ const colors = require("tailwindcss/colors");
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      aspectRatio: {
+        "960/41": "960 / 41",
+      },
+    },
     colors: {
       black: colors.black,
       white: colors.white,
       gray: colors.gray,
+      stone: colors.stone,
       red: colors.red,
       green: colors.green,
       yellow: colors.yellow,
